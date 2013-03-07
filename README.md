@@ -33,7 +33,7 @@ Registriere das Bundle mit folgender Codezeile:
 ## Konfiguration
 Folgende Konfigurationen stehen dir zur Verfügung
 
-	assets_extra:
+	checkdomain_assets_extra:
 		write_to: assets
 		encrpyt_bundle: false
 		assets_path: bundles
