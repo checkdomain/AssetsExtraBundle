@@ -1,0 +1,8 @@
+parameters:
+  templating.asset.path_package.class: Checkdomain\AssetsExtraBundle\Templating\Asset\PathPackage
+  assets_extra.assets_locator.class: Checkdomain\AssetsExtraBundle\Services\AssetsLocator
+  
+services:
+  assets_locator:
+    class: %assets_extra.assets_locator.class%
+    arguments: [%assets_extra.assets_path%, %assets_extra.encrypt_bundle%]

@@ -1,0 +1,25 @@
+{
+    "name": "checkdomain/assets-extra-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 Bundle to extend built-in asset-management",
+    "keywords": ["bundle", "assetic", "asset"],
+    "homepage": "https://www.checkdomain.de/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Florian Koerner",
+            "homepage": "https://www.checkdomain.de/"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": ">=2.1,<2.3-dev"
+    },
+
+    "autoload": {
+        "psr-0": { "Checkdomain\\AssetsExtraBundle": "" }
+    },
+
+    "target-dir": "Checkdomain/AssetsExtraBundle"
+}
