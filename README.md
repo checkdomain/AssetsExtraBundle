@@ -25,7 +25,7 @@ Registriere das Bundle mit folgender Codezeile:
 	{
     	$bundles = array(
         	// ...
-        	new Checkdomain\AssetsExtraBundle(),
+        	new Checkdomain\CheckdomainAssetsExtraBundle(),
     	);
     	// ...
 	}
