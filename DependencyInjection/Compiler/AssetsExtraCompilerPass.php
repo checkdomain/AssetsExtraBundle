@@ -24,5 +24,24 @@ class AssetsExtraCompilerPass implements CompilerPassInterface
                   ->addMethodCall('setAssetsLocator', array(
                       new Reference('assets_locator')
                   ));
+        
+        if ($container->has('assetic.filter.lessphp'))
+        {
+            $container->getDefinition('assetic.filter.lessphp')
+                      ->addMethodCall('setKernel', array(
+                          new Reference('kernel')
+                      ));
+        }
+        
+        if ($container->has('assetic.filter.cssrewrite'))
+        {
+            $container->getDefinition('assetic.filter.cssrewrite')
+                      ->addMethodCall('setKernel', array(
+                          new Reference('kernel')
+                      ))
+                      ->addMethodCall('setAssetsLocator', array(
+                          new Reference('assets_locator')
+                      ));
+        }
     }
 }

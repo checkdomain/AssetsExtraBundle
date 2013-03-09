@@ -74,6 +74,16 @@ class AssetsLocator implements AssetsLocatorInterface
             array_unshift($parts, $this->assets_path);
         }
         
-        return implode('/', $parts);
+        $url = '/' . implode('/', $parts);
+
+        
+        // Normalize url
+        $url = preg_replace('~(/+)~', '/', $url);
+        while (preg_match($pattern = '/\w+\/\.\.\//', $url))
+        {
+            $url = preg_replace($pattern, '', $url);
+        }
+        
+        return $url;
     }
 }

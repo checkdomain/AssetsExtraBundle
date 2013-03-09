@@ -1,6 +1,8 @@
 parameters:
   templating.asset.path_package.class: Checkdomain\AssetsExtraBundle\Templating\Asset\PathPackage
   assets_extra.assets_locator.class: Checkdomain\AssetsExtraBundle\Services\AssetsLocator
+  assetic.filter.lessphp.class: Checkdomain\AssetsExtraBundle\Assetic\Filter\LessphpFilter
+  assetic.filter.cssrewrite.class: Checkdomain\AssetsExtraBundle\Assetic\Filter\CssRewriteFilter
   
 services:
   assets_locator:
