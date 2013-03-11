@@ -1,5 +1,5 @@
 # AssetsExtraBundle
-Dieses Bundle stellt eine erweiterte Konfiguration und Twig-Extension für Assets zur Verfügung.
+Erweitert die Konfiguration der internen Symfony 2 [Assets-Verwaltung](https://github.com/symfony/FrameworkBundle/tree/master/Templating/Asset), um Bundlenamen im Dateipfad zu verschlüsseln oder auch den Assets-Ordner von "*bundles*" auf einen anderen umzustellen. Beinhaltet Erweiterungen der Twig [*asset()*-Funktion](http://symfony.com/doc/2.0/book/templating.html#linking-to-assets), des [Assetic](https://github.com/kriswallsmith/assetic) LessPHP-Compilers und CssRewrite-Filters, welche das Verweisen mit [Logical File Names](http://symfony.com/doc/current/quick_tour/the_architecture.html#logical-file-names) erlauben sowie einen Assetic [CssRewrite-Filter-Bug](http://stackoverflow.com/questions/9500573/path-of-assets-in-css-files-in-symfony2) Fix.
 
 ## Installation
 Befolge folgende Schritte, um das Bundle in deiner Symfony-Umgebung zu installieren.
@@ -29,12 +29,30 @@ Registriere das Bundle mit folgender Codezeile:
     	);
     	// ...
 	}
+	
+### 4. Schritt
+Wenn du LessPHP nutzen möchtest, aktiviere die Erweiterung wie gewohnt in deiner Konfiguration. Eine Anleitung dazu findest du zum Beispiel auf [howto24.net](http://code.howto24.net/2012/07/09/symfony-2-1-how-to-manage-less-file-by-lessphp/).
+
+Wir empfehlen das aktivieren des CssRewrite-Filters von Assetic auf alle Dateiendungen, wie:
+
+- *.css
+- *.less
+- *.sass
+- und *.scss
+
+Bearbeite deine Konfiguration dazu einfach wie folgt:
+
+	assetic:
+  		filters:
+    		cssrewrite:
+        		apply_to: '\.(css|less|sass|scss)$'
+
 
 ## Konfiguration
 Folgende Konfigurationen stehen dir zur Verfügung
 
 	checkdomain_assets_extra:
-		write_to: assets
+		write_to: web
 		encrpyt_bundle: false
 		assets_path: bundles
 		
@@ -46,12 +64,17 @@ Folgende Konfigurationen stehen dir zur Verfügung
 
 
 ## Anwendung
-Der Console-Command **assets:install** funktioniert wie gewohnt, berücksichtigt jedoch auch die AssetsExtra-Konfiguration.
+Im folgenden werden die verschiedenen Anwendungsbereiche kurz erklärt. In den Beispielen nutzen wir folgende Konfiguration.
 
-Die Twig-Funktion **asset(path)** berücksichtigt ebenfalls die Konfiguration und lässt zudem nun **@BundleName** im Pfad zu.
+	checkdomain_assets_extra:
+		encrpyt_bundle: true
+		assets_path: assets
 
-## Beispiel
-Der Wert für **assets_path** steht auf "*asstes*" und **encrypt_bundle** steht auf "*true*".
+### Assets installieren
+Mit dem Konsolen-Kommando **assets:install** lassen sich alle Assets entsprechend der Konfiguration installieren. Weitere Informationen liefert der Befehl **assets:install --help**.
+
+### Twig asset()-Funktion
+Die Twig-Funktion funktioniert wie gewohnt. Zusätzlich ist der Gebrauch von *Logical File Names* möglich.
 
 **test.html.twig**
 
@@ -60,10 +83,36 @@ Der Wert für **assets_path** steht auf "*asstes*" und **encrypt_bundle** steht 
 
 **Ergebnis**
 
-	assets/e0b6011f/test.jpg
-	assets/e0b6011f/test.jpg
-	
-Es werden also auch direkte Pfade zu den Standard-Verzeichnissen automatisch umgeschrieben.
+	/assets/e0b6011f/test.jpg
+	/assets/e0b6011f/test.jpg
 
-## ToDo
-1. Assetic-Filter, wie *LessPHP* oder *cssrewrite*, auf konfigurierbare Pfade einstellen.
+### Css-Rewrite-Filter
+Ohne dieses Bundle funktioniert dieser Filter nur, wenn keine *Logical File Names* in der Twig-Extension für Assetic genutzt werden. Dieses Problem ist gelöst und zudem sind auch *Logical File Names* in den CSS-Dateien selbst möglich.
+
+**/src/Acme/DemoBundle/Resources/public/css/test.css**
+
+	// Zeigt auf: /src/Twitter/BootstrapBundle/Resources/public/css/bootstrap.css
+	@import url(@TwitterBootstrapBundle/css/bootstrap.css);
+
+	.logo {
+		// Zeigt auf: /src/Acme/DemoBundle/Resources/public/img/logo.jpg
+		background-image: url(../img/logo.jpg);
+	}
+		
+**Ergebnis**
+
+	@import url(/assets/19e3eda3/css/bootstrap.css);
+	
+	.logo {
+		background-image: url(/assets/19e3eda3/img/logo.jpg);
+	}
+	
+### LessPHP-Compiler
+Interessant sind hier Imports aus verschiedenen Bundles, welche ohne dieses Bundle nur durch mühselige Angabe des kompletten Verzeichnispfades möglich wären. Wir nutzen einfach *Logical File Names*.
+
+**/src/Acme/DemoBundle/Resources/public/css/test.css**
+
+	// Zeigt auf: /src/Twitter/BootstrapBundle/Resources/less/bootstrap.less
+	@import url(@TwitterBootstrapBundle/Resources/less/bootstrap.less);
+
+**Achtung:** Da die Less-Dateien nicht zwangsläufig im *public*-Ordner liegen müssen, ist hier die Angabe des kompletten Pfades nötig, während in den anderen Beispielen der Pfad */Resources/public/* komplett weggelassen werden muss und automatisch von diesem Ordner ausgegangen wird, da nur dieser bei einem *assets:install* kopiert wird.
