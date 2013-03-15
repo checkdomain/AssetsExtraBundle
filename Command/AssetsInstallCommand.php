@@ -16,7 +16,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -27,10 +26,7 @@ use Symfony\Component\Finder\Finder;
  */
 class AssetsInstallCommand extends BaseCommand
 {
-    protected $basePath;
-    protected $symlink;
-    protected $relative;
-    protected $encrypt;
+    protected $config = array();
 
     protected $assets_locator;
     protected $filesystem;
@@ -48,10 +44,14 @@ class AssetsInstallCommand extends BaseCommand
     {
         parent::initialize($input, $output);
 
-        $this->basePath = $input->getArgument('write_to') ?: $this->getContainer()->getParameter('assets_extra.write_to');
-        $this->basePath .= '/' . $this->getContainer()->getParameter('assets_extra.assets_path');
-        $this->symlink = $input->getOption('verbose');
-        $this->relative = $this->getContainer()->get('assetic.asset_manager');
+        $basePath = $input->getArgument('write_to') ?: $this->getContainer()->getParameter('assets_extra.write_to')
+                  . '/' . $this->getContainer()->getParameter('assets_extra.assets_path');
+        
+        $this->config = array(
+            'basePath'  => $basePath,
+            'symlink'   => $this->getOption('symlink'),
+            'relative'  => $this->getOption('relative')
+        );
         
         $this->assets_locator = $this->getContainer()->get('assets_locator');
         $this->filesystem = $this->getContainer()->get('filesystem');
@@ -60,9 +60,9 @@ class AssetsInstallCommand extends BaseCommand
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $basePath = rtrim($this->basePath, '/');
+        $basePath = rtrim($this->config['basePath'], '/');
 
-        if (!function_exists('symlink') && $this->symlink)
+        if (!function_exists('symlink') && $this->config['symlink'])
         {
             throw new \InvalidArgumentException('The symlink() function is not available on your system. You need to install the assets without the --symlink option.');
         }
@@ -72,7 +72,7 @@ class AssetsInstallCommand extends BaseCommand
             $this->filesystem->mkdir($basePath, 0777);
         }
         
-        $output->writeln(sprintf("Installing assets using the <comment>%s</comment> option", $input->getOption('symlink') ? 'symlink' : 'hard copy'));
+        $output->writeln(sprintf("Installing assets using the <comment>%s</comment> option", $this->config['symlink'] ? 'symlink' : 'hard copy'));
 
         foreach ($this->bundles as $bundle)
         {
@@ -84,9 +84,9 @@ class AssetsInstallCommand extends BaseCommand
 
                 $this->filesystem->remove($assetsDir);
 
-                if ($input->getOption('symlink'))
+                if ($this->config['symlink'])
                 {
-                    if ($input->getOption('relative'))
+                    if ($this->config['relative'])
                     {
                         $relativeOriginDir = $this->filesystem->makePathRelative($originDir, realpath($assetsDir));
                     }
