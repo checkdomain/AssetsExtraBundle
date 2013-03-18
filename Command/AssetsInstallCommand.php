@@ -44,7 +44,7 @@ class AssetsInstallCommand extends BaseCommand
     {
         parent::initialize($input, $output);
 
-        $basePath = $input->getArgument('write_to') ?: $this->getContainer()->getParameter('assets_extra.write_to')
+        $basePath = ($input->getArgument('write_to') ?: $this->getContainer()->getParameter('assets_extra.write_to'))
                   . '/' . $this->getContainer()->getParameter('assets_extra.assets_path');
         
         $this->config = array(
