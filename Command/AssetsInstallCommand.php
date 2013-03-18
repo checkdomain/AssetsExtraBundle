@@ -49,8 +49,8 @@ class AssetsInstallCommand extends BaseCommand
         
         $this->config = array(
             'basePath'  => $basePath,
-            'symlink'   => $this->getOption('symlink'),
-            'relative'  => $this->getOption('relative')
+            'symlink'   => $input->getOption('symlink'),
+            'relative'  => $input->getOption('relative')
         );
         
         $this->assets_locator = $this->getContainer()->get('assets_locator');
