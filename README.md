@@ -125,7 +125,7 @@ Ohne dieses Bundle funktioniert dieser Filter nur, wenn keine *Logical File Name
 ```
 	
 ### LessPHP-Compiler
-Interessant sind hier Imports aus verschiedenen Bundles, welche ohne dieses Bundle nur durch mühselige Angabe des kompletten Verzeichnispfades möglich wären. Wir nutzen einfach *Logical File Names*. In diesem Beispiel nutzen wir das [TwitterBootstrapBundle](https://gitbub.com/checkdomain/twitter-bootstrap-bundle).
+Interessant sind hier Imports aus verschiedenen Bundles, welche ohne dieses Bundle nur durch mühselige Angabe des kompletten Verzeichnispfades möglich wären. Wir nutzen einfach *Logical File Names*. In diesem Beispiel nutzen wir das [TwitterBootstrapBundle](https://github.com/checkdomain/TwitterBootstrapBundle).
 
 **/src/Acme/DemoBundle/Resources/public/css/test.css**
 
