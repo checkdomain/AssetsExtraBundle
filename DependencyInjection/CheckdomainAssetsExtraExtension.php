@@ -29,9 +29,9 @@ class CheckdomainAssetsExtraExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         
-        $container->setParameter('assets_extra.write_to', $config['write_to']);
-        $container->setParameter('assets_extra.assets_path', $config['assets_path']);
-        $container->setParameter('assets_extra.encrypt_bundle', $config['encrypt_bundle']);
+        $container->setParameter('checkdomain_assets_extra.write_to', $config['write_to']);
+        $container->setParameter('checkdomain_assets_extra.assets_path', $config['assets_path']);
+        $container->setParameter('checkdomain_assets_extra.encrypt_bundle', $config['encrypt_bundle']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

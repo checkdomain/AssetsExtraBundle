@@ -25,6 +25,11 @@ class AssetsExtraCompilerPass implements CompilerPassInterface
                       new Reference('assets_locator')
                   ));
         
+        $container->getDefinition('templating.asset.url_package')
+                  ->addMethodCall('setAssetsLocator', array(
+                      new Reference('assets_locator')
+                  ));
+        
         if ($container->has('assetic.filter.lessphp'))
         {
             $container->getDefinition('assetic.filter.lessphp')
