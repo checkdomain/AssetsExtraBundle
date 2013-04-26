@@ -1,5 +1,4 @@
-![checkdomain GmbH](https://www.checkdomain.de/img/logos/cd-github-logo.png "Sponsored by checkdomain")
-# AssetsExtraBundle
+# ![checkdomain GmbH](https://www.checkdomain.de/img/logos/cd-github-logo.png "Sponsored by checkdomain") AssetsExtraBundle
 Erweitert die Konfiguration der internen Symfony 2 [Assets-Verwaltung](https://github.com/symfony/FrameworkBundle/tree/master/Templating/Asset), um Bundlenamen im Dateipfad zu verschlüsseln oder auch den Assets-Ordner von "bundles" auf einen anderen umzustellen. Beinhaltet Erweiterungen der Twig [*asset()*-Funktion](http://symfony.com/doc/2.0/book/templating.html#linking-to-assets), des [Assetic](https://github.com/kriswallsmith/assetic) LessPHP-Compilers und CssRewrite-Filters, welche das Verweisen mit [Logical File Names](http://symfony.com/doc/current/quick_tour/the_architecture.html#logical-file-names) erlauben sowie einen Assetic [CssRewrite-Filter-Bug](http://stackoverflow.com/questions/9500573/path-of-assets-in-css-files-in-symfony2) Fix.
 
 ## Installation
