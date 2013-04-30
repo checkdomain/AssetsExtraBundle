@@ -22,7 +22,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class LessphpFilter extends LessphpFilterBase
 {
     protected $kernel = NULL;
-    
+    protected $presets = array();
+
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
@@ -32,6 +33,16 @@ class LessphpFilter extends LessphpFilterBase
     public function getKernel()
     {
         return $this->kernel;
+    }
+    
+    public function setPresets(array $presets)
+    {
+        $this->presets = $presets;
+    }
+    
+    public function getPresets()
+    {
+        return $this->presets;
     }
     
     public function filterLoad(AssetInterface $asset)
@@ -58,6 +69,6 @@ class LessphpFilter extends LessphpFilterBase
             $lc->setPreserveComments($this->preserveComments);
         }
 
-        $asset->setContent($lc->parse($asset->getContent(), $this->presets));
+        $asset->setContent($lc->parse($asset->getContent(), $this->getPresets()));
     }
 }
