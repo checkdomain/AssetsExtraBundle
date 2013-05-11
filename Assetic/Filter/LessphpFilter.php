@@ -10,7 +10,6 @@
 namespace Checkdomain\AssetsExtraBundle\Assetic\Filter;
 
 use Assetic\Asset\AssetInterface;
-
 use Assetic\Filter\LessphpFilter as LessphpFilterBase;
 use Checkdomain\AssetsExtraBundle\Assetic\Compiler\LessphpCompiler;
 
@@ -23,6 +22,8 @@ class LessphpFilter extends LessphpFilterBase
 {
     protected $kernel = NULL;
     protected $presets = array();
+    protected $formatter;
+    protected $preserveComments;
 
     public function setKernel(KernelInterface $kernel)
     {
@@ -35,14 +36,24 @@ class LessphpFilter extends LessphpFilterBase
         return $this->kernel;
     }
     
-    public function setPresets(array $presets)
-    {
-        $this->presets = $presets;
-    }
-    
     public function getPresets()
     {
         return $this->presets;
+    }
+    
+    public function getFormatter()
+    {
+        return $this->formatter;
+    }
+    
+    public function getPreserveComments()
+    {
+        return $this->preserveComments;
+    }
+    
+    public function getLoadPaths()
+    {
+        return $this->loadPaths;
     }
     
     public function filterLoad(AssetInterface $asset)
@@ -57,16 +68,16 @@ class LessphpFilter extends LessphpFilterBase
             $lc->importDir = dirname($root.'/'.$path);
         }
 
-        foreach ($this->loadPaths as $loadPath) {
+        foreach ($this->getLoadPaths() as $loadPath) {
             $lc->addImportDir($loadPath);
         }
 
-        if ($this->formatter) {
-            $lc->setFormatter($this->formatter);
+        if ($this->getFormatter()) {
+            $lc->setFormatter($this->getFormatter());
         }
 
-        if (null !== $this->preserveComments) {
-            $lc->setPreserveComments($this->preserveComments);
+        if (null !== $this->getPreserveComments()) {
+            $lc->setPreserveComments($this->getPreserveComments());
         }
 
         $asset->setContent($lc->parse($asset->getContent(), $this->getPresets()));
