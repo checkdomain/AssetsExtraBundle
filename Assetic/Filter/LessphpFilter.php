@@ -48,7 +48,7 @@ class LessphpFilter extends LessphpFilterBase
     
     public function setFormatter($formatter) {
         $this->formatter = $formatter;
-        return $ths;
+        return $this;
     }
     
     public function getFormatter()
