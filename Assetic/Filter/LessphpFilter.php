@@ -36,14 +36,28 @@ class LessphpFilter extends LessphpFilterBase
         return $this->kernel;
     }
     
+    public function setPresets(array $presets) {
+        $this->presets = $presets;
+        return $this;
+    }
+
     public function getPresets()
     {
         return $this->presets;
     }
     
+    public function setFormatter($formatter) {
+        $this->formatter = $formatter;
+    }
+    
     public function getFormatter()
     {
         return $this->formatter;
+    }
+    
+    public function setPreserveComments($preserveComments) {
+        $this->preserveComments = $preserveComments;
+        return $this;
     }
     
     public function getPreserveComments()
