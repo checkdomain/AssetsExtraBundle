@@ -89,17 +89,14 @@ class CssRewriteFilter extends BaseCssFilter
         {
             if (strstr($this->asset->getSourceRoot(), $bundle->getPath()) !== false)
             {
-                if ($bundle->getContainerExtension())
-                {
-                    $path = preg_replace('%^Resources/public/%i', '', dirname($this->asset->getSourcePath()));
-                    
-                    if ($path == dirname($this->asset->getSourcePath()))
-                    {
-                        $path = '';
-                    }
+                $path = preg_replace('%^Resources/public/%i', '', dirname($this->asset->getSourcePath()));
 
-                    return sprintf('@%s/%s/', $bundle->getName(), $path);
+                if ($path == dirname($this->asset->getSourcePath()))
+                {
+                    $path = '';
                 }
+
+                return sprintf('@%s/%s/', $bundle->getName(), $path);
             }
         }
 
