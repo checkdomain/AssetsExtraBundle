@@ -59,13 +59,13 @@ Folgende Konfigurationen stehen dir zur Verfügung
 ```yaml
 checkdomain_assets_extra:
 	write_to: web
-	encrpyt_bundle: false
+	encrypt_bundle: false
 	assets_path: bundles
 ```
 		
 - **write_to** <br /> ist bekannt aus dem [AsseticBundle](https://github.com/symfony/AsseticBundle). Du kannst angeben, in welchen Ordner die Assets beim Ausführen von ```app/console assetic:install``` standardmäßig geschrieben werden sollen.
 
-- **encrpyt_bundle** <br /> verschleiert, wenn aktiviert, den Bundle-Namen im Asset-Pfad. Aus ```bundles/acmedemo/test.jpg``` wird zum Beispiel ```bundles/e0b6011f/test.jpg```
+- **encrypt_bundle** <br /> verschleiert, wenn aktiviert, den Bundle-Namen im Asset-Pfad. Aus ```bundles/acmedemo/test.jpg``` wird zum Beispiel ```bundles/e0b6011f/test.jpg```
 
 - **assets_path** <br /> gibt das Verzeichnis für Assets an. Als Standard ist bei Symfony der Wert ```bundles``` gesetzt, aber vielleicht findet ja der ein oder andere zum Beispiel ```assets``` schöner.
 
@@ -75,7 +75,7 @@ Im folgenden werden die verschiedenen Anwendungsbereiche kurz erklärt. In den B
 
 ```yaml
 checkdomain_assets_extra:
-	encrpyt_bundle: true
+	encrypt_bundle: true
 	assets_path: assets
 ```
 
