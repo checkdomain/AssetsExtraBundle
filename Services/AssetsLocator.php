@@ -51,7 +51,7 @@ class AssetsLocator implements AssetsLocatorInterface
         $parts = explode('/', trim($path, '/'));
         
         // Not an ordinary file path
-        if ($parts[0][0] !== '@' && $parts[0] !== 'bundles') {
+        if ($parts[0] == false || ($parts[0][0] !== '@' && $parts[0] !== 'bundles')) {
             return $path;
         }
         
